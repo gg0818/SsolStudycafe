@@ -93,11 +93,10 @@ public class ReserveCont {
 	
 	@RequestMapping(value = "/reserve", method = RequestMethod.GET)
 	@ResponseBody
-	public ArrayList<StoreDTO> resAjax() throws Exception {
-		//store_no, store_name, store_address, room_count, desk_count, box_count
+	public ArrayList<StoreDTO> resAjax() throws Exception {//매장정보
 		ArrayList<StoreDTO> storeList = null;
 		try {
-			storeList = dao.storeList(); //매장정보
+			storeList = dao.storeList(); 
 		} catch (Exception e) {
 			System.out.println("resAjax 실패 : "+e);
 		}

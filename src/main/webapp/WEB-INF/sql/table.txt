@@ -20,24 +20,23 @@ primary key (en_email))
 ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- 매장정보T 
-CREATE TABLE tb_store_info(
-  store_no int(10) NOT NULL auto_increment,
-  en_email varchar(30) NOT NULL,
+CREATE TABLE tb_store_info (
+  store_no int(10) NOT NULL AUTO_INCREMENT,
+  en_email varchar(100) NOT NULL,
   store_name varchar(30) NOT NULL,
   store_address varchar(100) NOT NULL,
   operating_hours varchar(50) NOT NULL,
   room_count int(10) NOT NULL,
   desk_count int(10) NOT NULL,
-  box_count int(10) NOT NULL,
+  locker_count int(10) NOT NULL,
   store_img varchar(100) NOT NULL,
   store_en_no varchar(30) NOT NULL,
   latitude double NOT NULL,
   longitude double NOT NULL,
   tel varchar(20) NOT NULL,
   PRIMARY KEY (store_no),
-  FOREIGN KEY (en_email) REFERENCES tb_member_en(en_email))
-ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
+  FOREIGN KEY (en_email) REFERENCES tb_member_en(en_email)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- 이벤트T
 create table tb_event(
@@ -57,17 +56,17 @@ ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- 좌석예약T
 CREATE TABLE tb_seat_res (
-  sres_no int(10) NOT NULL AUTO_INCREMENT,
-  in_email varchar(30) NOT NULL,
+  res_no int(10) NOT NULL AUTO_INCREMENT,
+  in_email varchar(100) NOT NULL,
   store_no int(10) NOT NULL,
   seat_code varchar(20) NOT NULL,
   res_date varchar(10) NOT NULL,
   times varchar(100) NOT NULL DEFAULT '',
   e_number int(10) DEFAULT NULL,
   total int(10) NOT NULL DEFAULT 0,
-  pay_prog char(1) NOT NULL,
+  pay_prog char(1) NOT NULL DEFAULT 'Y',
   prog tinyint(1) NOT NULL DEFAULT 0,
-  PRIMARY KEY (sres_no),
+  PRIMARY KEY (res_no),
   FOREIGN KEY (in_email) REFERENCES tb_member_in(in_email),
   FOREIGN KEY (store_no) REFERENCES tb_store_info(store_no),
   FOREIGN KEY (e_number) REFERENCES tb_event(e_number)
@@ -76,21 +75,22 @@ CREATE TABLE tb_seat_res (
 
 -- 사물함예약 T
 CREATE TABLE tb_locker_res (
-  lres_no int(10) NOT NULL AUTO_INCREMENT,
-  in_email varchar(30) NOT NULL,
+  res_no int(10) NOT NULL AUTO_INCREMENT,
+  in_email varchar(100) NOT NULL,
   store_no int(10) NOT NULL,
   locker_code varchar(20) NOT NULL,
-  s_date varchar(20) NOT NULL,
-  e_date varchar(20) NOT NULL,
+  res_start_date varchar(20) NOT NULL,
+  res_end_date varchar(20) NOT NULL,
   e_number int(10) DEFAULT NULL,
   total int(10) NOT NULL DEFAULT 0,
-  pay_prog char(1) NOT NULL,
+  pay_prog char(1) NOT NULL DEFAULT 'Y',
   prog tinyint(1) NOT NULL DEFAULT 0,
-  PRIMARY KEY (lres_no),
+  PRIMARY KEY (res_no),
   FOREIGN KEY (in_email) REFERENCES tb_member_in(in_email),
   FOREIGN KEY (store_no) REFERENCES tb_store_info(store_no),
   FOREIGN KEY (e_number) REFERENCES tb_event(e_number)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 -- 예약 테이블 T
 CREATE TABLE tb_reserve (
@@ -99,7 +99,7 @@ CREATE TABLE tb_reserve (
   store_no int(10) NOT NULL,
   seat_code varchar(20) NOT NULL,
   res_date varchar(20) NOT NULL,
-   end_date varchar(20) NOT NULL DEFAULT '',
+  end_date varchar(20) NOT NULL DEFAULT '',
   times varchar(100) NOT NULL DEFAULT '',
   e_number int(10) DEFAULT NULL,
   total int(10) NOT NULL DEFAULT 0,
@@ -120,8 +120,8 @@ sres_no int(10),
 lres_no int(10),
 total int(10) not null default 0,
 primary key (buy_no),
-FOREIGN KEY (sres_no) REFERENCES tb_seat_res(sres_no),
-FOREIGN KEY (lres_no) REFERENCES tb_locker_res(lres_no))
+FOREIGN KEY (sres_no) REFERENCES tb_seat_res(res_no),
+FOREIGN KEY (lres_no) REFERENCES tb_locker_res(res_no))
 ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ​
 -- 공지사항T
@@ -167,23 +167,29 @@ CREATE TABLE tb_review(
 -- insert test
 -- 개인회원정보
 -- select * from tb_member_in;
-insert into tb_member_in values('dbsdud1025@gmail.com','dkssud12!','박윤영','1999.10.25');
+INSERT INTO tb_member_in (in_email, in_pw, in_name, in_birth)
+VALUES
+	('dbsdud1025@gmail.com', 'dkssud12!', '박윤영', '1999.10.25'),
+	('gihyun0818@gmail.com', 'wkdwlgus1!', '장지현', '1994-01-24');
+
 
 -- 사업자회원정보
 -- select * from tb_member_en;
-insert into tb_member_en values('dbsdud1025@naver.com','dkssud12!','윤영','1999.10.25','123-12345-45678');
+INSERT INTO tb_member_en (en_email, en_pw, en_name, en_birth, en_no)
+VALUES
+	('dbsdud1025@naver.com', 'dkssud12!', '박윤영', '1999.10.25', '123-12345-45678'),
+	('wlgus2644@naver.com', 'wkdwlgus1!', '장지현', '1990-01-24', '123-122-312312');
+
 
 -- 매장정보 
 -- select * from tb_store_info;
+INSERT INTO tb_store_info (store_no, en_email, store_name, store_address, operating_hours, room_count, desk_count, locker_count, store_img, store_en_no, latitude, longitude, tel)
+VALUES
+	(3, 'dbsdud1025@naver.com', '홍대점', '서울 마포구 양화로 165', '08:00-21:00', 4, 30, 20, 'store2.jpg', '123-456-789456', 37.557654557627586, 126.92444543999783, '02-2222-3333'),
+	(4, 'dbsdud1025@naver.com', '신정점', '서울 양천구 오목로 155', '08:00-21:00', 4, 31, 20, 'store3.jpg', '123-456-789456', 37.484378623657555, 126.9297866265025, '02-3333-5555'),
+	(5, 'dbsdud1025@naver.com', '목동점', '서울 양천구 신정동 오목로 238 LOND사옥', '08:00-21:00', 4, 30, 20, 'store4.jpg', '123-456-789456', 37.52602943586907, 126.86381820006488, '02-3434-3434'),
+	(8, 'wlgus2644@naver.com', '마곡나루점', '서울 강서구 마곡중앙로 161-17', '08:00-21:00', 4, 30, 20, 'store5.jpg', '123-456-333333', 37.56842593269759, 126.82619215921507, '02-2222-7777');
 
-INSERT INTO tb_store_info (en_email, store_name, store_address, operating_hours, room_count, desk_count, box_count, store_img, latitude, longitude, tel, store_en_no)
-VALUES('dbsdud1025@naver.com', '홍대점', '서울 마포구 양화로 165', '08:00-24:00', 4, 30, 20, 'store2.jpg', 37.557654557627586, 126.92444543999783, '02-2222-3333', '123-456-789456');
-
-INSERT INTO tb_store_info (en_email, store_name, store_address, operating_hours, room_count, desk_count, box_count, store_img, latitude, longitude, tel, store_en_no)
-VALUES('dbsdud1025@naver.com', '신정점', '서울 양천구 오목로 155', '08:00-24:00', 4, 31, 20, 'store3.jpg', 37.484378623657555, 126.9297866265025, '02-3333-5555', '123-456-789456');
-
-INSERT INTO tb_store_info (en_email, store_name, store_address, operating_hours, room_count, desk_count, box_count, store_img, latitude, longitude, tel, store_en_no)
-VALUES('dbsdud1025@naver.com', '목동점', '서울 양천구 신정동 오목로 238 LOND사옥', '08:00-24:00', 4, 30, 20, 'store4.jpg', 37.52602943586907, 126.86381820006488, '02-3434-3434', '123-456-789456');
 
 --------------------------------------------------------------------------------
 밑에 부분은 오류뜰 수도있어요! 위에까지만 안전

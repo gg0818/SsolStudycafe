@@ -229,7 +229,6 @@ var resScript = (function(){
                     res_date:res_date
                 },
 				success: function(data) {
-                    console.log(JSON.stringify(data));
                     resArray=[];
                     locArr=[];
                     $.each(data,function(idx, val) {
@@ -320,8 +319,19 @@ var resScript = (function(){
             });
         },
         seatClick : function(){//좌석선택시 이벤트
+            var nowDate;
+            var now = new Date();
+            var year = now.getFullYear();
+            var month = now.getMonth() + 1;
+            var date = now.getDate();
+            if(month < 10){
+                month = '0'+month;
+            }
+            if(date < 10){
+                date = '0'+date;
+            }
+            nowDate = year+"-"+month+"-"+date;
             $(document).on("click", ".reserveCont .seatDiv .seat", function(){// 좌석 클릭 시 
-                
                 if($(".reserveCont select.location").val() == "none" || $(".reserveCont select.store").val() == "none"){
                     alert("지역, 지점명을 선택해주세요!");
                     return false;
@@ -364,7 +374,18 @@ var resScript = (function(){
                             });
                         }
                     }
-                    
+
+                    if(nowDate == $("#today").val()){
+                        $(".resTime .scrollD a").each(function(index){
+                            if(parseInt($(".resTime .scrollD a").eq(index).attr("data-time")) <= now.getHours()){
+                                if(!$(".resTime .scrollD a").eq(index).hasClass("no")){
+                                    $(".resTime .scrollD a").eq(index).addClass("no");
+                                    $(".resTime .scrollD a").eq(index).find(".mark").html("예약완료");
+                                }
+                            }
+                        });
+                    }
+
                     // 좌석선택하면 좌석 탭 보여지게 
                     if(!$(".reserveCont .rightFix .tabD .tab a").eq(0).hasClass("on")){
                         $(".reserveCont .rightFix .tabD .tab a").eq(0).click();
@@ -638,7 +659,7 @@ var resScript = (function(){
                 });
             }
             
-            // db 조회 
+            // 결제하기 클릭 시 - 그 사이에 추가 된 예약 내역 있는지 조회 
             $.ajax({
 				type: "POST",
 				url: "../resChk",
@@ -681,9 +702,6 @@ var resScript = (function(){
                         layerPop("resPop");
                     }
 				},
-                error:function(request, status, error){
-                    console.log("AJAX_ERROR");
-                }
 			});// ajax     
         },
         resFinalChk : function(in_email){//예약하기

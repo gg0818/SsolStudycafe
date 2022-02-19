@@ -74,7 +74,6 @@ public class ReserveDAO {
 			rs=pstmt.executeQuery();
 			
 			if(rs.next()) {
-				//resList = new ArrayList<ReserveDTO>();
 				do {
 					ReserveDTO dto = new ReserveDTO();
 					dto.setStore_no(rs.getInt("store_no"));
@@ -150,7 +149,7 @@ public class ReserveDAO {
 		return cnt;
 	}
 	
-	//좌석 예
+	//좌석 예약 
 	public int resSeatIns(String in_email, int store_no, String seat_code, String res_date, String times, int total) {
 		int cnt=0;
 		try {

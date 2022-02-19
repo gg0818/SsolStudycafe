@@ -8,9 +8,6 @@ public class PlaceDTO {
 	private String store_name;
 	private String store_address;
 	private String operating_hours;
-	private int room_count;
-	private int desk_count;
-	private int box_count;
 	private double latitude;
 	private double longitude;
 	private String store_img;
@@ -71,31 +68,6 @@ public class PlaceDTO {
 	public void setOperating_hours(String operating_hours) {
 		this.operating_hours = operating_hours;
 	}
-
-	public int getRoom_count() {
-		return room_count;
-	}
-
-	public void setRoom_count(int room_count) {
-		this.room_count = room_count;
-	}
-
-	public int getDesk_count() {
-		return desk_count;
-	}
-
-	public void setDesk_count(int desk_count) {
-		this.desk_count = desk_count;
-	}
-
-	public int getBox_count() {
-		return box_count;
-	}
-
-	public void setBox_count(int box_count) {
-		this.box_count = box_count;
-	}
-
 	public double getLatitude() {
 		return latitude;
 	}

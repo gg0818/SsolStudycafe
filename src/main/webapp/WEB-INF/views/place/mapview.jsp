@@ -48,9 +48,7 @@
 				</div>
 			</div>
 			<div class="mapView">
-				<div id="map">
-				
-				</div>	
+				<div id="map"></div>	
 			</div>
 		</div>
 	</div>

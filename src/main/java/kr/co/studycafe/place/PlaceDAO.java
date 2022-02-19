@@ -15,7 +15,6 @@ public class PlaceDAO {
 	private StringBuilder sql = null;
 	
 	public PlaceDAO() {
-		System.out.println("==========PlaceDAO() 시작");
 		dbopen = new DBOpen();
 	}
 	
@@ -27,19 +26,21 @@ public class PlaceDAO {
 			keyword=keyword.trim();
 			System.out.println(keyword);
 			if(keyword.length() == 0) { //검색하지 않은 경우
-				sql.append(" SELECT store_no, en_email, store_name, store_address, operating_hours, room_count, desk_count, box_count, store_img, tel, latitude, longitude, IFNULL(ROUND(avg(rev_score)),0) AS score_avg, COUNT(rev_score) AS review_tot ");
+				sql.append(" SELECT store_no, en_email, store_name, store_address, operating_hours, store_img, tel, ");
+				sql.append(" latitude, longitude, IFNULL(ROUND(avg(rev_score)),0) AS score_avg, COUNT(rev_score) AS review_tot ");
 				sql.append(" FROM( ");
-				sql.append(" 	SELECT ST.store_no, ST.en_email, ST.store_name, ST.store_address, ST.operating_hours, ST.room_count, ST.desk_count, "); 
-				sql.append("		ST.box_count, ST.store_img, ST.tel, ST.latitude, ST.longitude, RE.rev_score ");
+				sql.append(" 	SELECT ST.store_no, ST.en_email, ST.store_name, ST.store_address, ST.operating_hours, "); 
+				sql.append("		ST.store_img, ST.tel, ST.latitude, ST.longitude, RE.rev_score ");
 				sql.append("		FROM tb_store_info ST LEFT JOIN tb_review RE ");
 				sql.append("		on ST.store_no = RE.store_no ");
 				sql.append("	)tb_STRE ");
 				sql.append(" group by store_no ");
 			}else {
-				sql.append(" SELECT store_no, en_email, store_name, store_address, operating_hours, room_count, desk_count, box_count, store_img, tel, latitude, longitude, IFNULL(ROUND(avg(rev_score)),0) AS score_avg, COUNT(rev_score) AS review_tot ");
+				sql.append(" SELECT store_no, en_email, store_name, store_address, operating_hours, store_img, tel, ");
+				sql.append(" latitude, longitude, IFNULL(ROUND(avg(rev_score)),0) AS score_avg, COUNT(rev_score) AS review_tot ");
 				sql.append(" FROM( ");
-				sql.append(" 	SELECT ST.store_no, ST.en_email, ST.store_name, ST.store_address, ST.operating_hours, ST.room_count, ST.desk_count, "); 
-				sql.append("		ST.box_count, ST.store_img, ST.tel, ST.latitude, ST.longitude, RE.rev_score ");
+				sql.append(" 	SELECT ST.store_no, ST.en_email, ST.store_name, ST.store_address, ST.operating_hours, "); 
+				sql.append("		ST.store_img, ST.tel, ST.latitude, ST.longitude, RE.rev_score ");
 				sql.append("		FROM tb_store_info ST LEFT JOIN tb_review RE ");
 				sql.append("		on ST.store_no = RE.store_no ");
 				sql.append("	)tb_STRE ");
@@ -58,9 +59,6 @@ public class PlaceDAO {
 					dto.setStore_name(rs.getString("store_name"));
 					dto.setStore_address(rs.getString("store_address"));
 					dto.setOperating_hours(rs.getString("operating_hours"));
-					dto.setRoom_count(rs.getInt("room_count"));
-					dto.setDesk_count(rs.getInt("desk_count"));
-					dto.setBox_count(rs.getInt("box_count"));
 					dto.setStore_img(rs.getString("store_img"));
 					dto.setTel(rs.getString("tel"));
 					dto.setLatitude(rs.getDouble("latitude"));

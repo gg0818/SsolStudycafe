@@ -1,4 +1,3 @@
-<%@page import="java.util.Calendar"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
@@ -105,60 +104,21 @@
 								</tr>
 							</thead>
 							<tbody>
+								<%
+									for(int i=0; i<6; i++){
+								%>
 								<tr>
+								<%
+										for(int j=0; j<7; j++){
+								%>
 									<td><a href="javascript:" name="day" class="day" alt=""></a></td>
-									<td><a href="javascript:" name="day" class="day" alt=""></a></td>
-									<td><a href="javascript:" name="day" class="day" alt=""></a></td>
-									<td><a href="javascript:" name="day" class="day" alt=""></a></td>
-									<td><a href="javascript:" name="day" class="day" alt=""></a></td>
-									<td><a href="javascript:" name="day" class="day" alt=""></a></td>
-									<td><a href="javascript:" name="day" class="day" alt=""></a></td>
+								<%	
+										}
+								%>
 								</tr>
-								<tr>
-									<td><a href="javascript:" name="day" class="day" alt=""></a></td>
-									<td><a href="javascript:" name="day" class="day" alt=""></a></td>
-									<td><a href="javascript:" name="day" class="day" alt=""></a></td>
-									<td><a href="javascript:" name="day" class="day" alt=""></a></td>
-									<td><a href="javascript:" name="day" class="day" alt=""></a></td>
-									<td><a href="javascript:" name="day" class="day" alt=""></a></td>
-									<td><a href="javascript:" name="day" class="day" alt=""></a></td>
-								</tr>
-								<tr>
-									<td><a href="javascript:" name="day" class="day" alt=""></a></td>
-									<td><a href="javascript:" name="day" class="day" alt=""></a></td>
-									<td><a href="javascript:" name="day" class="day" alt=""></a></td>
-									<td><a href="javascript:" name="day" class="day" alt=""></a></td>
-									<td><a href="javascript:" name="day" class="day" alt=""></a></td>
-									<td><a href="javascript:" name="day" class="day" alt=""></a></td>
-									<td><a href="javascript:" name="day" class="day" alt=""></a></td>
-								</tr>
-								<tr>
-									<td><a href="javascript:" name="day" class="day" alt=""></a></td>
-									<td><a href="javascript:" name="day" class="day" alt=""></a></td>
-									<td><a href="javascript:" name="day" class="day" alt=""></a></td>
-									<td><a href="javascript:" name="day" class="day" alt=""></a></td>
-									<td><a href="javascript:" name="day" class="day" alt=""></a></td>
-									<td><a href="javascript:" name="day" class="day" alt=""></a></td>
-									<td><a href="javascript:" name="day" class="day" alt=""></a></td>
-								</tr>
-								<tr>
-									<td><a href="javascript:" name="day" class="day" alt=""></a></td>
-									<td><a href="javascript:" name="day" class="day" alt=""></a></td>
-									<td><a href="javascript:" name="day" class="day" alt=""></a></td>
-									<td><a href="javascript:" name="day" class="day" alt=""></a></td>
-									<td><a href="javascript:" name="day" class="day" alt=""></a></td>
-									<td><a href="javascript:" name="day" class="day" alt=""></a></td>
-									<td><a href="javascript:" name="day" class="day" alt=""></a></td>
-								</tr>
-								<tr>
-									<td><a href="javascript:" name="day" class="day" alt=""></a></td>
-									<td><a href="javascript:" name="day" class="day" alt=""></a></td>
-									<td><a href="javascript:" name="day" class="day" alt=""></a></td>
-									<td><a href="javascript:" name="day" class="day" alt=""></a></td>
-									<td><a href="javascript:" name="day" class="day" alt=""></a></td>
-									<td><a href="javascript:" name="day" class="day" alt=""></a></td>
-									<td><a href="javascript:" name="day" class="day" alt=""></a></td>
-								</tr>
+								<%	
+									}
+								%>	
 							</tbody>
 						</table>
 					</div>	
@@ -173,22 +133,19 @@
 							<p class="info">예약시간 <span>(시간은 복수선택 가능합니다)</span></p>
 							<div class="none"><span>좌석을 선택해 주세요.</span></div>
 							<div class="scrollD"><!-- a태그에 class="no" 붙으면 예약완료 -->
-								<a href="javascript:" data-time="08" ><span class="mark">예약가능</span><span>08:00 ~ 09:00</span></a>
-								<a href="javascript:" data-time="09" ><span class="mark">예약가능</span><span>09:00 ~ 10:00</span></a>
-								<a href="javascript:" data-time="10" ><span class="mark">예약가능</span><span>10:00 ~ 11:00</span></a>
-								<a href="javascript:" data-time="11" ><span class="mark">예약가능</span><span>11:00 ~ 12:00</span></a>
-								<a href="javascript:" data-time="12" ><span class="mark">예약가능</span><span>12:00 ~ 13:00</span></a>
-								<a href="javascript:" data-time="13" ><span class="mark">예약가능</span><span>13:00 ~ 14:00</span></a>
-								<a href="javascript:" data-time="14" ><span class="mark">예약가능</span><span>14:00 ~ 15:00</span></a>
-								<a href="javascript:" data-time="15" ><span class="mark">예약가능</span><span>15:00 ~ 16:00</span></a>
-								<a href="javascript:" data-time="16" ><span class="mark">예약가능</span><span>16:00 ~ 17:00</span></a>
-								<a href="javascript:" data-time="17" ><span class="mark">예약가능</span><span>17:00 ~ 18:00</span></a>
-								<a href="javascript:" data-time="18" ><span class="mark">예약가능</span><span>18:00 ~ 19:00</span></a>
-								<a href="javascript:" data-time="19" ><span class="mark">예약가능</span><span>19:00 ~ 20:00</span></a>
-								<a href="javascript:" data-time="20" ><span class="mark">예약가능</span><span>20:00 ~ 21:00</span></a>
-								<a href="javascript:" data-time="21" ><span class="mark">예약가능</span><span>21:00 ~ 22:00</span></a>
-								<a href="javascript:" data-time="22" ><span class="mark">예약가능</span><span>22:00 ~ 23:00</span></a>
-								<a href="javascript:" data-time="23" ><span class="mark">예약가능</span><span>23:00 ~ 24:00</span></a>
+								<%
+									for(int i=8; i<21; i++){
+										String j= Integer.toString(i);
+										String j2 = Integer.toString(i+1);
+										if(i<10) j='0'+Integer.toString(i);
+										if(i+1 < 10){
+											j2='0'+Integer.toString(i+1);
+										}
+								%>
+								<a href="javascript:" data-time="<%=j%>" ><span class="mark">예약가능</span><span><%=j%>:00 ~ <%=j2%>:00</span></a>
+								<%			
+									}
+								%>
 							</div>
 						</div><!-- //div -->
 						<div class="resDay">
