@@ -27,11 +27,12 @@ public class MypageDAO {
 		try {
 			con=dbopen.getConnection();
 			sql=new StringBuilder();
-			sql.append(" SELECT res_no, res_date, times, store_name, seat_code, prog");
-			sql.append(" FROM tb_reserve JOIN tb_store_info");
-			sql.append(" ON tb_reserve.store_no = tb_store_info.store_no ");
-			sql.append(" WHERE in_email = ? AND  seat_code LIKE 'desk%' ");
+			sql.append(" SELECT res_no, res_date, times, store_name, seat_code, prog ");
+			sql.append(" FROM tb_seat_res JOIN tb_store_info ");
+			sql.append(" ON tb_seat_res.store_no = tb_store_info.store_no ");
+			sql.append(" WHERE in_email = ? ");
 			sql.append(" ORDER BY res_no DESC ");
+			
 			pstmt=con.prepareStatement(sql.toString());
 			pstmt.setString(1, uid);
 			rs=pstmt.executeQuery();
@@ -61,10 +62,10 @@ public class MypageDAO {
 		try {
 			con=dbopen.getConnection();
 			sql=new StringBuilder();
-			sql.append(" SELECT res_no, res_date, end_date, store_name, seat_code, prog");
-			sql.append(" FROM tb_reserve JOIN tb_store_info");
-			sql.append(" ON tb_reserve.store_no = tb_store_info.store_no ");
-			sql.append(" WHERE in_email = ? AND seat_code LIKE 'locker%' ");
+			sql.append(" SELECT res_no, res_start_date, res_end_date, store_name, locker_code, prog ");
+			sql.append(" FROM tb_locker_res JOIN tb_store_info ");
+			sql.append(" ON tb_locker_res.store_no = tb_store_info.store_no ");
+			sql.append(" WHERE in_email = ? ");
 			sql.append(" ORDER BY res_no DESC ");
 			pstmt=con.prepareStatement(sql.toString());
 			pstmt.setString(1, uid);
@@ -74,10 +75,10 @@ public class MypageDAO {
 				do {
 					MypageDTO dto = new MypageDTO();
 					dto.setRes_no(rs.getInt("res_no"));
-					dto.setRes_date(rs.getString("res_date"));
-					dto.setEnd_date(rs.getString("end_date"));
+					dto.setRes_date(rs.getString("res_start_date"));
+					dto.setEnd_date(rs.getString("res_end_date"));
 					dto.setStore_name(rs.getString("store_name"));
-					dto.setSeat_code(rs.getString("seat_code"));
+					dto.setSeat_code(rs.getString("locker_code"));
 					dto.setProg(rs.getInt("prog"));
 					lockerlist.add(dto);
 				}while(rs.next());
@@ -90,7 +91,7 @@ public class MypageDAO {
 		return lockerlist;
 	}// lockerlist() end
 	
-	public ArrayList<MypageDTO> couponlist(String uid) { //이벤트 당첨자
+	public ArrayList<MypageDTO> couponlist(String uid) { //이벤트 당첨자 
 		ArrayList<MypageDTO> couponlist = null;
 
 		try {

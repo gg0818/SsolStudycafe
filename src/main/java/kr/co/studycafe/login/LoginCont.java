@@ -33,18 +33,18 @@ public class LoginCont {
 		ModelAndView mav = new ModelAndView();
 		LoginDTO Dto=null;
 		Dto = dao.loginProc(dto);
-		System.out.println(Dto);
 		if (Dto == null) { //한 사람이 개인, 사업자 회원가입할 때 같은 이메일 사용 금지
 			mav.addObject("msg", "아이디 또는 비밀번호가 일치하지 않습니다.");
 			mav.addObject("url", "/login/login.do");
 		} else {
-			 /* 세션 생성 */
+			 /* 세션 생성 */ 
 		    HttpSession session = req.getSession();
 		    if(session.getAttribute("uid")!=null ){
 				session.removeAttribute("uid");
 				session.removeAttribute("user");
 			}
 		    session.setAttribute("uid", Dto.getEmail());
+		    session.setAttribute("user", Dto.getUser());
 		    
 			mav.addObject("msg", "로그인 성공하셨습니다.");
 			mav.addObject("url", "/home.do");

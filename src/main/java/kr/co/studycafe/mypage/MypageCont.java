@@ -55,7 +55,7 @@ public class MypageCont {
 
 	@RequestMapping("/mypage/place_add.do")
 	public String placeAdd() {
-		return "/mypage/placeForm";
+		return "/mypage/placeForm"; 
 	}
 
 	@RequestMapping(value = "/mypage/place_add.do", method = RequestMethod.POST)

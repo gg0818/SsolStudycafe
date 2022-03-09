@@ -25,17 +25,18 @@ public class NoticeDAO {
 		dbopen = new DBOpen();		
 	}
 	
-	public ArrayList<NoticeDTO> list() {
+	public ArrayList<NoticeDTO> list() {  
 		ArrayList<NoticeDTO> list = null;
 		
 		try {
 			con=dbopen.getConnection();
 			sql= new StringBuilder();
-			sql.append(" SELECT n_number, en_email, n_title, n_date, store_name ");
-			sql.append(" FROM tb_notice ");
-			sql.append(" ORDER BY n_number desc ");
+			sql.append(" SELECT n.n_number, n.en_email, n.n_title, n.n_date, s.store_name ");
+			sql.append(" FROM tb_notice AS n JOIN tb_store_info AS s ");
+			sql.append(" ON n.store_no = s.store_no ");			
+			sql.append(" ORDER BY n.n_date DESC ");
 			pstmt=con.prepareStatement(sql.toString());
-			rs=pstmt.executeQuery();
+			rs=pstmt.executeQuery(); 
 			if(rs.next()) {
 				list = new ArrayList<NoticeDTO>();
 				do {
@@ -105,6 +106,25 @@ public class NoticeDAO {
 		return cnt;
 		
 	}
+	
+	public int delete(int noticeNo) {
+		int cnt=0;
+		try {
+			con=dbopen.getConnection();
+			sql=new StringBuilder();
+			sql.append(" DELETE FROM tb_notice WHERE n_number=? ");
+			pstmt=con.prepareStatement(sql.toString());
+			pstmt.setInt(1, noticeNo);
+			cnt=pstmt.executeUpdate();
+		}catch (Exception e) {
+			System.out.println("place delete 실패 : "+e);
+		}finally {
+			DBClose.close(con, pstmt); 
+		}
+		
+		return cnt;
+		
+	}
 		
 	
 	public ArrayList<NoticeDTO> storelist(String uid){
@@ -133,34 +153,21 @@ public class NoticeDAO {
 			DBClose.close(con, pstmt, rs);
 	
 		}
-		
-		
 		return storelist;
 	}
 	
 	public int write(NoticeDTO dto) {
 		int cnt=0;
 		try {
-			String store_name="";
 			con=dbopen.getConnection();
 			sql=new StringBuilder();
-			sql.append(" SELECT store_name FROM tb_store_info WHERE store_no = ? ");
-			pstmt=con.prepareStatement(sql.toString());
-			pstmt.setInt(1, dto.getStore_no());
-			rs=pstmt.executeQuery();
-			if(rs.next()) {
-				store_name = rs.getString("store_name");
-			}
-			
-		
-			sql=new StringBuilder();
-			sql.append(" INSERT INTO tb_notice (en_email, n_title, n_content ,store_name) ");
+			sql.append(" INSERT INTO tb_notice (en_email, n_title, n_content ,store_no) ");
 			sql.append(" VALUES (?, ?, ?, ?) ");
 			pstmt=con.prepareStatement(sql.toString());
 			pstmt.setString(1, dto.getEn_email());
 			pstmt.setString(2, dto.getN_title());
 			pstmt.setString(3, dto.getN_content());
-			pstmt.setString(4, store_name);
+			pstmt.setInt(4, dto.getStore_no());
 			
 			cnt=pstmt.executeUpdate();
 			
@@ -170,7 +177,6 @@ public class NoticeDAO {
 			DBClose.close(con, pstmt,rs);
 			
 		}
-				
 				
 		return cnt;
 	}

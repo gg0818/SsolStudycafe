@@ -23,7 +23,7 @@ public class NoticeCont {
 		dao=new NoticeDAO();
 		System.out.println("=============Notice 실행");
 	}
-	
+	  
 	@RequestMapping("/notice/notice.do")
 	public ModelAndView noticeList() {
 		ModelAndView mav = new ModelAndView();
@@ -37,7 +37,7 @@ public class NoticeCont {
 		NoticeDTO dto = dao.read(n_number);
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("/notice/notice_view");
-		mav.addObject("dto", dto);
+		mav.addObject("dto", dto); 
 		return mav;
 	}
 	
@@ -46,8 +46,24 @@ public class NoticeCont {
 		ModelAndView mav = new ModelAndView();
 		NoticeDTO dto = dao.read(n_number);
 		mav.setViewName("/notice/notice_modify");
-		mav.addObject("dto", dto);
+		mav.addObject("dto", dto); 
 		
+		return mav;
+	}
+	
+	@RequestMapping(value="/notice/notice_delete.do", method=RequestMethod.GET)
+	public ModelAndView noticeDelete(int n_number) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("/notice/noticeIns");
+		int cnt = dao.delete(n_number);
+		
+		if(cnt == 0) {
+			mav.addObject("msg", "공지사항이 삭제에 실패했습니.");
+		}else {
+			mav.addObject("msg", "공지사항이 삭제되었습니다.");
+		}
+		
+		mav.addObject("url", "/notice/notice.do"); 		
 		return mav;
 	}
 	
@@ -56,8 +72,6 @@ public class NoticeCont {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("/notice/notice_write");		
 		mav.addObject("storeList", dao.storelist(uid));
-		
-		
 		return mav;
 	}
 	
@@ -75,6 +89,5 @@ public class NoticeCont {
 		}
 		return mav;
 	}
-
 
 }

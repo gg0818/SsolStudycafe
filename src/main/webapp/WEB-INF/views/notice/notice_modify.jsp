@@ -9,7 +9,7 @@
 
 <div class="container inquiry_wrap">
 	<div class="inner">
-		<form name="inquiry_write" action="notice_modifySubmit.do?n_number=${dto.n_number}" method="post" action="submit" class="inquiry_form">
+		<form name="inquiry_write" action="notice_modify.do?n_number=${dto.n_number}" method="post" action="submit" class="inquiry_form">
 			<div class="revWrite">
 				<div class="left">
 					<h3>공지사항 등록</h3>
